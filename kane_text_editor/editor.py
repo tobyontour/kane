@@ -14,8 +14,16 @@ class Editor:
     def cursor_position(self):
         return self.cursor
 
+    def cursor_backward(self):
+        if self.cursor > 1:
+            self.cursor -= 1
+
+    def cursor_forward(self):
+        if self.cursor < len(self.buffer):
+            self.cursor += 1
+
     def append(self, c: str):
-        self.buffer.append(c)
+        self.buffer.insert(self.cursor, c)
         self.cursor += 1
 
     def delete(self):
@@ -23,6 +31,6 @@ class Editor:
             del self.buffer[self.cursor]
 
     def backspace(self):
-        if self.cursor >= len(self.buffer):
+        if self.buffer and self.cursor > 0:
             self.cursor -= 1
             self.delete()
