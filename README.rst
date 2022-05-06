@@ -18,6 +18,7 @@ Kane Text Editor
 
 A text editor for Rich
 
+It's called Kane because Citizen Kane is about a rich editor...
 
 * Free software: MIT license
 * Documentation: https://kane-text-editor.readthedocs.io.
