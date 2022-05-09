@@ -22,6 +22,12 @@ def test_editor_add_one_character():
     assert e.get() == "x"
     assert e.cursor_position() == 1
 
+def test_editor_add_one_unicode_character():
+    e = editor.LineEditor()
+    e.append('😎')
+    assert e.get() == "😎"
+    assert e.cursor_position() == 1
+
 def test_editor_add_two_characters():
     e = editor.LineEditor()
     e.append('x')
