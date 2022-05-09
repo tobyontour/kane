@@ -10,6 +10,7 @@ class Editor:
     def __init__(self, s: str = "") -> None:
         self.lines = list(s.splitlines())
         self.current_line = 0
+        self.current_line_editor = LineEditor(self.lines[0])
 
     def get(self):
         return "\n".join(self.lines)
@@ -33,6 +34,12 @@ class Editor:
 
         self.current_line_editor.cursor_move(x)
         self.current_line = y
+
+    def cursor_forward(self, count: int):
+        self.current_line_editor.cursor_forward()
+
+    def append(self, data: str):
+        self.current_line_editor.append(data)
 
 class LineEditor:
     buffer = []
