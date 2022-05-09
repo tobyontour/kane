@@ -3,6 +3,38 @@ from turtle import pos
 
 
 class Editor:
+    lines = []
+    current_line = None
+    current_line_editor = None
+
+    def __init__(self, s: str = "") -> None:
+        self.lines = list(s.splitlines())
+        self.current_line = 0
+
+    def get(self):
+        return "\n".join(self.lines)
+
+    def position(self):
+        if self.current_line_editor is not None:
+            return (self.current_line_editor.cursor_position(), self.current_line)
+        else:
+            return (0, self.current_line)
+
+    def move(self, x: int = 0, y: int = 0):
+        y = max(0, y)
+        y = min(len(self.lines) - 1, y)
+        x = max(0, x)
+        x = min(len(self.lines[y]) - 1, x)
+
+        if y != self.current_line or self.current_line_editor is None:
+            self.current_line_editor = LineEditor(self.lines[y])
+
+        self.current_line_editor.cursor_move(x)
+        self.current_line = y
+
+
+
+class LineEditor:
     buffer = []
     cursor = 0
     clipboard_buffer = ""
