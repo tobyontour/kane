@@ -20,7 +20,9 @@ class Editor:
         else:
             return (0, self.current_line)
 
-    def move(self, x: int = 0, y: int = 0):
+    def move(self, x: int, y: int = None):
+        if y is None:
+            y = self.current_line
         y = max(0, y)
         y = min(len(self.lines) - 1, y)
         x = max(0, x)
@@ -31,8 +33,6 @@ class Editor:
 
         self.current_line_editor.cursor_move(x)
         self.current_line = y
-
-
 
 class LineEditor:
     buffer = []
