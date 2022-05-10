@@ -35,11 +35,20 @@ class Editor:
         self.current_line_editor.cursor_move(x)
         self.current_line = y
 
-    def cursor_forward(self, count: int):
+    def cursor_forward(self):
         self.current_line_editor.cursor_forward()
+        self.update()
+
+    def cursor_backward(self):
+        self.current_line_editor.cursor_backward()
+        self.update()
 
     def append(self, data: str):
         self.current_line_editor.append(data)
+        self.update()
+
+    def update(self):
+        self.lines[self.current_line] = self.current_line_editor.get()
 
 class LineEditor:
     buffer = []
