@@ -3,15 +3,12 @@
 from rich.panel import Panel
 from textual.reactive import Reactive
 from textual.widget import Widget
-from textual.widgets import ScrollView
 import textual
-from editor import Editor
-from editor import LineEditor
-from datetime import datetime
+from rich_editor import RichEditor
 
 class KaneTextEditor(Widget):
     buffer_change = Reactive(False)
-    ed = Editor("The quick brown fox")
+    ed = RichEditor("The quick brown fox")
 
     def __init__(self, name: str = None) -> None:
         super().__init__(name)
