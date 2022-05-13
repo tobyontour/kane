@@ -5,8 +5,6 @@
 import pytest
 
 
-from kane_text_editor import kane_text_editor, editor
-
 
 @pytest.fixture
 def response():

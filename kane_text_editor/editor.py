@@ -1,16 +1,16 @@
 
-from turtle import pos
-
-
 class Editor:
     lines = []
     current_line = None
     current_line_editor = None
 
     def __init__(self, s: str = "") -> None:
-        self.lines = list(s.splitlines())
+        self.lines = s.splitlines()
+        if not self.lines:
+            self.lines = [""]
         self.current_line = 0
         self.current_line_editor = LineEditor(self.lines[0])
+        self.current_line_editor.cursor_move(0)
 
     def get(self):
         return "\n".join(self.lines)
