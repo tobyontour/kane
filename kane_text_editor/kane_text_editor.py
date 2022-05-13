@@ -19,16 +19,17 @@ class KaneTextEditor(Widget):
     def on_key(self, event: textual.events.Key) -> None:
         if event.key.isprintable() and len(event.key) == 1:
             self.ed.append(event.key)
-            if self.buffer_change:
-                self.buffer_change = False
-            else:
-                self.buffer_change = True
         elif event.key == 'left':
             self.ed.cursor_backward()
         elif event.key == 'right':
             self.ed.cursor_forward()
         elif event.key == 'ctrl+h':
             self.ed.backspace()
+
+        if self.buffer_change:
+            self.buffer_change = False
+        else:
+            self.buffer_change = True
 
 if __name__ == "__main__":
     from textual.app import App
