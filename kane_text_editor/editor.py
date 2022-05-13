@@ -43,6 +43,10 @@ class Editor:
         self.current_line_editor.cursor_backward()
         self.update()
 
+    def backspace(self):
+        self.current_line_editor.backspace()
+        self.update()
+
     def append(self, data: str):
         self.current_line_editor.append(data)
         self.update()

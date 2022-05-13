@@ -30,6 +30,8 @@ class KaneTextEditor(Widget):
             self.ed.cursor_backward()
         elif event.key == 'right':
             self.ed.cursor_forward()
+        elif event.key == 'ctrl+h':
+            self.ed.backspace()
 
 if __name__ == "__main__":
     from textual.app import App
