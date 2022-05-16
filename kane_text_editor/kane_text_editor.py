@@ -1,5 +1,6 @@
 """Main module."""
 
+from xmlrpc.client import boolean
 from rich.panel import Panel
 from textual.reactive import Reactive
 from textual.widget import Widget
@@ -17,19 +18,23 @@ class KaneTextEditor(Widget):
         return Panel(self.ed.get())
 
     def on_key(self, event: textual.events.Key) -> None:
-        if event.key.isprintable() and len(event.key) == 1:
-            self.ed.append(event.key)
-        elif event.key == 'left':
-            self.ed.cursor_backward()
-        elif event.key == 'right':
-            self.ed.cursor_forward()
-        elif event.key == 'ctrl+h':
-            self.ed.backspace()
+        if self.process_key(event.key):
+            if self.buffer_change:
+                self.buffer_change = False
+            else:
+                self.buffer_change = True
 
-        if self.buffer_change:
-            self.buffer_change = False
-        else:
-            self.buffer_change = True
+    def process_key(self, key: str) -> boolean:
+        update_required = True
+        if key.isprintable() and len(key) == 1:
+            self.ed.append(key)
+        elif key == 'left':
+            self.ed.cursor_backward()
+        elif key == 'right':
+            self.ed.cursor_forward()
+        elif key == 'ctrl+h':
+            self.ed.backspace()
+        return update_required
 
 if __name__ == "__main__":
     from textual.app import App

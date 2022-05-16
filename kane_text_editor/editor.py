@@ -71,7 +71,7 @@ class LineEditor:
         return self.cursor
 
     def cursor_backward(self):
-        if self.cursor > 1:
+        if self.cursor > 0:
             self.cursor -= 1
 
     def cursor_forward(self):
