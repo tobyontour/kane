@@ -17,7 +17,8 @@ class Editor:
 
     def position(self):
         if self.current_line_editor is not None:
-            return (self.current_line_editor.cursor_position(), self.current_line)
+            return (self.current_line_editor.cursor_position(),
+                    self.current_line)
         else:
             return (0, self.current_line)
 
@@ -52,7 +53,16 @@ class Editor:
         self.update()
 
     def update(self):
-        self.lines[self.current_line] = self.current_line_editor.get()
+        line_editor_content = self.current_line_editor.get().splitlines()
+        if len(line_editor_content) == 1:
+            self.lines[self.current_line] = self.current_line_editor.get()
+        elif self.current_line == 0:
+            self.lines = line_editor_content + self.lines
+        else:
+            self.lines = self.lines[0:self.current_line] + \
+                        line_editor_content + \
+                        self.lines[self.current_line + 1:]
+
 
 class LineEditor:
     buffer = []

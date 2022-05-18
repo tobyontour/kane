@@ -1,6 +1,7 @@
 
 from editor import Editor
 
+
 class RichEditor(Editor):
 
     def get_plain(self):
@@ -8,7 +9,9 @@ class RichEditor(Editor):
 
     def get(self):
         backup = self.lines[self.current_line]
-        if self.current_line_editor.cursor_position() < len(self.lines[self.current_line]):
+        if self.current_line_editor.cursor_position() < \
+                len(self.lines[self.current_line]):
+
             self.lines[self.current_line] = \
                 backup[:self.current_line_editor.cursor_position()] + \
                 "[reverse]" + \
@@ -20,4 +23,3 @@ class RichEditor(Editor):
         tmp = super().get()
         self.lines[self.current_line] = backup
         return tmp
-

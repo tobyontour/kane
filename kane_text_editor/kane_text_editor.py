@@ -7,6 +7,7 @@ from textual.widget import Widget
 import textual
 from rich_editor import RichEditor
 
+
 class KaneTextEditor(Widget):
     buffer_change = Reactive(False)
     ed = RichEditor("The quick brown fox")
@@ -37,6 +38,7 @@ class KaneTextEditor(Widget):
         elif key == 'ctrl+h':
             self.ed.backspace()
         return update_required
+
 
 if __name__ == "__main__":
     from textual.app import App
