@@ -28,6 +28,8 @@ class KaneTextEditor(Widget):
         update_required = True
         if key.isprintable() and len(key) == 1:
             self.ed.append(key)
+        elif key == 'enter':
+            self.ed.append("\n")
         elif key == 'left':
             self.ed.cursor_backward()
         elif key == 'right':

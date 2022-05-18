@@ -50,3 +50,16 @@ dog's back.""")
     e.move(6, 1)
     e.move(3)
     assert e.position() == (3, 1)
+
+def test_editor_deals_with_added_multiple_line_return_from_line_editor():
+    e = editor.Editor("""The quick brown fox
+jumped over the lazy
+dog's back.""")
+
+    e.move(6, 1)
+    e.append(" with\nease")
+
+    assert e.get() == """The quick brown fox
+jumped with
+ease over the lazy
+dog's back."""
