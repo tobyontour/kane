@@ -23,6 +23,19 @@ def test_editor_with_simple_insertion():
     assert e.position() == (8, 0)
 
 
+def test_editor_with_simple_editting():
+    e = editor.Editor("The quick brown fox")
+    e.cursor_backward()
+    e.cursor_backward()
+    e.cursor_forward()
+    e.cursor_forward()
+    e.cursor_forward()
+    e.cursor_backward()
+    e.backspace()
+    assert e.position() == (1, 0)
+    assert e.get() == "Te quick brown fox"
+
+
 def test_editor_starts_off_with_inital_multiline_string():
     e = editor.Editor("""The quick brown fox
 jumped over the lazy
