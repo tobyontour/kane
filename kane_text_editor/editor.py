@@ -19,8 +19,6 @@ class Editor:
         if self.current_line_editor is not None:
             return (self.current_line_editor.cursor_position(),
                     self.current_line)
-        else:
-            return (0, self.current_line)
 
     def move(self, x: int, y: int = None):
         if y is None:
@@ -51,13 +49,16 @@ class Editor:
     def append(self, data: str):
         self.current_line_editor.append(data)
         self.update()
+        data_lines = data.split('\n')
+        if len(data_lines) != 1:
+            self.move(len(data_lines[-1]), self.current_line + len(data_lines) - 1)
 
     def update(self):
         line_editor_content = self.current_line_editor.get().splitlines()
         if len(line_editor_content) == 1:
             self.lines[self.current_line] = self.current_line_editor.get()
         elif self.current_line == 0:
-            self.lines = line_editor_content + self.lines
+            self.lines = line_editor_content + self.lines[1:]
         else:
             self.lines = self.lines[0:self.current_line] + \
                         line_editor_content + \

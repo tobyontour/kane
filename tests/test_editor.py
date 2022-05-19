@@ -15,6 +15,14 @@ def test_editor_starts_off_with_inital_string():
     assert e.get() == "The quick brown fox"
 
 
+def test_editor_with_simple_insertion():
+    e = editor.Editor("The quick brown fox")
+    e.move(5, 0)
+    e.append("XXX")
+    assert e.get() == "The qXXXuick brown fox"
+    assert e.position() == (8, 0)
+
+
 def test_editor_starts_off_with_inital_multiline_string():
     e = editor.Editor("""The quick brown fox
 jumped over the lazy
@@ -65,9 +73,17 @@ dog's back.""")
     e.move(6, 1)
     e.append(" with\nease")
 
-    # assert e.position() == (4, 2)
-    print(e.get())
+    assert e.position() == (4, 2)
     assert e.get() == """The quick brown fox
 jumped with
 ease over the lazy
 dog's back."""
+
+
+def test_editor_deals_with_added_line_return_from_line_editor():
+    e = editor.Editor("""The quick brown fox""")
+    e.append("\n")
+
+    assert e.position() == (0, 1)
+    assert e.get() == """
+The quick brown fox"""
