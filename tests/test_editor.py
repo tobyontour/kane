@@ -100,3 +100,13 @@ def test_editor_deals_with_added_line_return_from_line_editor():
     assert e.position() == (0, 1)
     assert e.get() == """
 The quick brown fox"""
+
+
+def test_editor_cursor_backwards_at_start_of_second_line():
+    e = editor.Editor("""The quick brown fox\njumped over""")
+    e.move(0, 1)
+    e.cursor_backward()
+
+    assert e.position() == (19, 0)
+    assert e.get() == """The quick brown fox\njumped over"""
+

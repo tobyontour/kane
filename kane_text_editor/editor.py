@@ -39,7 +39,13 @@ class Editor:
         self.update()
 
     def cursor_backward(self):
-        self.current_line_editor.cursor_backward()
+        if self.current_line_editor.cursor_position() == 0 and \
+                self.current_line > 0:
+            self.move(
+                len(self.lines[self.current_line - 1]) + 1,
+                self.current_line - 1)
+        else:
+            self.current_line_editor.cursor_backward()
         self.update()
 
     def backspace(self):
