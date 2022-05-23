@@ -63,7 +63,7 @@ def test_editor_get_current_position_after_move_off_end_of_text():
 jumped over the lazy
 dog's back.""")
     e.move(20, 10)
-    assert e.position() == (10, 2)
+    assert e.position() == (11, 2)
 
 
 def test_editor_move_with_one_parameter_does_not_change_y():

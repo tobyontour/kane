@@ -26,7 +26,7 @@ class Editor:
         y = max(0, y)
         y = min(len(self.lines) - 1, y)
         x = max(0, x)
-        x = min(len(self.lines[y]) - 1, x)
+        x = min(len(self.lines[y]) + 1, x)
 
         if y != self.current_line or self.current_line_editor is None:
             self.current_line_editor = LineEditor(self.lines[y])
