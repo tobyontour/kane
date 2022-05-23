@@ -10,7 +10,7 @@ from rich_editor import RichEditor
 
 class KaneTextEditor(Widget):
     buffer_change = Reactive(False)
-    ed = RichEditor("The quick brown fox")
+    ed = RichEditor("The quick brown fox\nJumped over")
 
     def __init__(self, name: str = None) -> None:
         super().__init__(name)
@@ -35,6 +35,10 @@ class KaneTextEditor(Widget):
             self.ed.cursor_backward()
         elif key == 'right':
             self.ed.cursor_forward()
+        elif key == 'up':
+            self.ed.cursor_up()
+        elif key == 'down':
+            self.ed.cursor_down()
         elif key == 'ctrl+h':
             self.ed.backspace()
         return update_required
@@ -47,6 +51,7 @@ if __name__ == "__main__":
 
         async def on_mount(self) -> None:
             self.kte = KaneTextEditor()
+            self.kte.ed.move(0, 1)
             await self.view.dock(self.kte)
 
         async def on_key(self, event: textual.events.Key) -> None:

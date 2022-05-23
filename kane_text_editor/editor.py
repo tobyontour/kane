@@ -26,7 +26,7 @@ class Editor:
         y = max(0, y)
         y = min(len(self.lines) - 1, y)
         x = max(0, x)
-        x = min(len(self.lines[y]) - 1, x)
+        x = min(len(self.lines[y]) + 1, x)
 
         if y != self.current_line or self.current_line_editor is None:
             self.current_line_editor = LineEditor(self.lines[y])
@@ -39,7 +39,21 @@ class Editor:
         self.update()
 
     def cursor_backward(self):
-        self.current_line_editor.cursor_backward()
+        if self.current_line_editor.cursor_position() == 0 and \
+                self.current_line > 0:
+            self.move(
+                len(self.lines[self.current_line - 1]) + 1,
+                self.current_line - 1)
+        else:
+            self.current_line_editor.cursor_backward()
+        self.update()
+
+    def cursor_up(self):
+        self.move(self.current_line_editor.cursor, self.current_line - 1)
+        self.update()
+
+    def cursor_down(self):
+        self.move(self.current_line_editor.cursor, self.current_line + 1)
         self.update()
 
     def backspace(self):
