@@ -35,6 +35,10 @@ class KaneTextEditor(Widget):
             self.ed.cursor_backward()
         elif key == 'right':
             self.ed.cursor_forward()
+        elif key == 'up':
+            self.ed.cursor_up()
+        elif key == 'down':
+            self.ed.cursor_down()
         elif key == 'ctrl+h':
             self.ed.backspace()
         return update_required

@@ -48,6 +48,14 @@ class Editor:
             self.current_line_editor.cursor_backward()
         self.update()
 
+    def cursor_up(self):
+        self.move(self.current_line_editor.cursor, self.current_line - 1)
+        self.update()
+
+    def cursor_down(self):
+        self.move(self.current_line_editor.cursor, self.current_line + 1)
+        self.update()
+
     def backspace(self):
         self.current_line_editor.backspace()
         self.update()
