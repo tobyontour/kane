@@ -12,12 +12,16 @@ Kane Text Editor
 ..         :target: https://kane-text-editor.readthedocs.io/en/latest/?badge=latest
 ..         :alt: Documentation Status
 
-A text editor for Rich
+A text editor widget for Textualize_
+
+.. _Textualize: https://www.textualize.io/
+
+**Do not even think of using until there's a release as everything is in flux**
 
 It's called Kane because Citizen Kane is about a rich editor...
 
 * Free software: MIT license
-* Documentation: https://kane-text-editor.readthedocs.io.
+.. * Documentation: https://kane-text-editor.readthedocs.io.
 
 
 Features
