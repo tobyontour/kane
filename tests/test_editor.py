@@ -166,9 +166,9 @@ def test_editor_cursor_down_off_end():
 
 
 def test_editor_backspace_at_start_of_second_line():
-    e = editor.Editor("""The quick brown fox\njumped over""")
+    e = editor.Editor("""The quick brown fox\njumped over\nx""")
     e.move(0, 1)
     e.backspace()
 
-    assert e.position() == (19, 1)
-    assert e.get() == """The quick brown foxjumped over"""
+    assert e.position() == (19, 0)
+    assert e.get() == """The quick brown foxjumped over\nx"""

@@ -62,7 +62,17 @@ class Editor:
         self.update()
 
     def backspace(self):
-        self.current_line_editor.backspace()
+        if self.current_line_editor.cursor_position() == 0:
+            if self.current_line == 0:
+                return
+            else:
+                final_x = len(self.lines[self.current_line - 1])
+                self.move(final_x, self.current_line - 1)
+                tmp = self.lines.pop(self.current_line + 1)
+                self.append(tmp)
+                self.move(final_x)
+        else:
+            self.current_line_editor.backspace()
         self.update()
 
     def append(self, data: str):
