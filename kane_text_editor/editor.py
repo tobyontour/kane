@@ -63,12 +63,15 @@ class Editor:
     def append(self, data: str):
         self.current_line_editor.append(data)
         self.update()
-        data_lines = data.split('\n')
-        if len(data_lines) != 1:
-            self.move(len(data_lines[-1]), self.current_line + len(data_lines) - 1)
+        data_line_count = data.count('\n')
+        if data_line_count > 0:
+            data_lines = data.splitlines()
+            self.move(len(data_lines[-1]), self.current_line + data_line_count)
 
     def update(self):
         line_editor_content = self.current_line_editor.get().splitlines()
+        if self.current_line_editor.get()[-1][-1] == '\n':
+           line_editor_content.append('')
         if len(line_editor_content) == 1:
             self.lines[self.current_line] = self.current_line_editor.get()
         elif self.current_line == 0:

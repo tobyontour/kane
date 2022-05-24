@@ -137,6 +137,7 @@ def test_editor_cursor_down():
     assert e.position() == (6, 1)
     assert e.get() == """The quick brown fox\njumped over"""
 
+
 def test_editor_cursor_down_off_end():
     e = editor.Editor("""The quick brown fox\njumped over""")
     e.move(16, 0)
@@ -144,3 +145,11 @@ def test_editor_cursor_down_off_end():
 
     assert e.position() == (11, 1)
     assert e.get() == """The quick brown fox\njumped over"""
+
+
+def test_editor_add_new_line_at_end():
+    e = editor.Editor("Four")
+    e.move(5, 0)
+    e.append("\n")
+    assert e.get() == "Four\n"
+    assert e.position() == (0, 1)
