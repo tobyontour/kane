@@ -35,7 +35,12 @@ class Editor:
         self.current_line = y
 
     def cursor_forward(self):
-        self.current_line_editor.cursor_forward()
+        if self.current_line_editor.cursor_position() \
+                == len(self.lines[self.current_line]) \
+                and self.current_line != len(self.lines) - 1:
+            self.move(0, self.current_line + 1)
+        else:
+            self.current_line_editor.cursor_forward()
         self.update()
 
     def cursor_backward(self):
@@ -65,7 +70,8 @@ class Editor:
         self.update()
         data_lines = data.split('\n')
         if len(data_lines) != 1:
-            self.move(len(data_lines[-1]), self.current_line + len(data_lines) - 1)
+            self.move(len(data_lines[-1]), self.current_line
+                      + len(data_lines) - 1)
 
     def update(self):
         line_editor_content = self.current_line_editor.get().splitlines()

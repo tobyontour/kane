@@ -111,6 +111,24 @@ def test_editor_cursor_backwards_at_start_of_second_line():
     assert e.get() == """The quick brown fox\njumped over"""
 
 
+def test_editor_cursor_forwards_at_end_of_first_line():
+    e = editor.Editor("""The quick brown fox\njumped over""")
+    e.move(19, 0)
+    e.cursor_forward()
+
+    assert e.position() == (0, 1)
+    assert e.get() == """The quick brown fox\njumped over"""
+
+
+def test_editor_cursor_forwards_at_end_of_last_line():
+    e = editor.Editor("""The quick brown fox\njumped over""")
+    e.move(11, 1)
+    e.cursor_forward()
+
+    assert e.position() == (11, 1)
+    assert e.get() == """The quick brown fox\njumped over"""
+
+
 def test_editor_cursor_up():
     e = editor.Editor("""The quick brown fox\njumped over""")
     e.move(5, 1)
@@ -120,7 +138,7 @@ def test_editor_cursor_up():
     assert e.get() == """The quick brown fox\njumped over"""
 
 
-def test_editor_cursor_up():
+def test_editor_cursor_up_to_a_shorter_line():
     e = editor.Editor("""The quick brown fox\njumped over the lazy dog's back""")
     e.move(25, 1)
     e.cursor_up()
@@ -137,6 +155,7 @@ def test_editor_cursor_down():
     assert e.position() == (6, 1)
     assert e.get() == """The quick brown fox\njumped over"""
 
+
 def test_editor_cursor_down_off_end():
     e = editor.Editor("""The quick brown fox\njumped over""")
     e.move(16, 0)
@@ -144,3 +163,12 @@ def test_editor_cursor_down_off_end():
 
     assert e.position() == (11, 1)
     assert e.get() == """The quick brown fox\njumped over"""
+
+
+def test_editor_backspace_at_start_of_second_line():
+    e = editor.Editor("""The quick brown fox\njumped over""")
+    e.move(0, 1)
+    e.backspace()
+
+    assert e.position() == (19, 1)
+    assert e.get() == """The quick brown foxjumped over"""
