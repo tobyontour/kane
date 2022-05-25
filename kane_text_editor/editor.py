@@ -3,6 +3,7 @@ class Editor:
     lines = []
     current_line = None
     current_line_editor = None
+    word_wrap = None
 
     def __init__(self, s: str = "") -> None:
         self.lines = s.splitlines()
@@ -11,6 +12,9 @@ class Editor:
         self.current_line = 0
         self.current_line_editor = LineEditor(self.lines[0])
         self.current_line_editor.cursor_move(0)
+
+    def set_word_wrap(self, wr: int) -> None:
+        self.word_wrap = wr
 
     def get(self):
         return "\n".join(self.lines)
@@ -34,9 +38,12 @@ class Editor:
         self.current_line_editor.cursor_move(x)
         self.current_line = y
 
+    def is_cursor_at_end_of_line(self):
+        return self.current_line_editor.cursor_position() \
+                == len(self.lines[self.current_line])
+
     def cursor_forward(self):
-        if self.current_line_editor.cursor_position() \
-                == len(self.lines[self.current_line]) \
+        if self.is_cursor_at_end_of_line() \
                 and self.current_line != len(self.lines) - 1:
             self.move(0, self.current_line + 1)
         else:
@@ -80,8 +87,13 @@ class Editor:
         self.update()
         data_lines = data.split('\n')
         if len(data_lines) != 1:
-            self.move(len(data_lines[-1]), self.current_line
-                      + len(data_lines) - 1)
+            self.move(len(data_lines[-1]),
+                      self.current_line + len(data_lines) - 1)
+
+    def wrap(self):
+        if self.word_wrap is None:
+            return
+
 
     def update(self):
         line_editor_content = self.current_line_editor.get().splitlines()

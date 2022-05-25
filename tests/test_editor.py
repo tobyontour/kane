@@ -172,3 +172,12 @@ def test_editor_backspace_at_start_of_second_line():
 
     assert e.position() == (19, 0)
     assert e.get() == """The quick brown foxjumped over\nx"""
+
+
+def test_editor_append_text_beyond_word_wrap():
+    e = editor.Editor("""0123456789""")
+    e.set_word_wrap(10)
+    e.append(" ")
+
+    assert e.position() == (1, 1)
+    assert e.get() == """0123456789\n """
