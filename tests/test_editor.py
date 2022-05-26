@@ -176,8 +176,9 @@ def test_editor_backspace_at_start_of_second_line():
 
 def test_editor_append_text_beyond_word_wrap():
     e = editor.Editor("""0123456789""")
+    e.move(10, 0)
     e.set_word_wrap(10)
     e.append(" ")
 
-    assert e.position() == (1, 1)
     assert e.get() == """0123456789\n """
+    assert e.position() == (1, 1)

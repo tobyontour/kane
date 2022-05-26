@@ -85,6 +85,9 @@ class Editor:
     def append(self, data: str):
         self.current_line_editor.append(data)
         self.update()
+        self.wrap()
+
+        # Now update the cursor
         data_lines = data.split('\n')
         if len(data_lines) != 1:
             self.move(len(data_lines[-1]),
@@ -93,6 +96,19 @@ class Editor:
     def wrap(self):
         if self.word_wrap is None:
             return
+
+        start = 0
+
+        for i, line in enumerate(self.lines, start):
+            if len(line) > self.word_wrap:
+                if i < len(self.lines) - 1:
+                    self.lines[i + 1] = line[self.word_wrap:] + self.lines[i + 1]
+                else:
+                    self.lines.append(line[self.word_wrap:])
+
+                self.lines[i] = line[0:self.word_wrap]
+
+        self.move(self.position()[0], self.position()[1])
 
 
     def update(self):
