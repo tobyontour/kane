@@ -10,7 +10,7 @@ from rich_editor import RichEditor
 
 class KaneTextEditor(Widget):
     buffer_change = Reactive(False)
-    ed = RichEditor("The quick brown fox\nJumped over")
+    ed = RichEditor("The quick brown fox jumped over. ")
 
     def __init__(self, name: str = None) -> None:
         super().__init__(name)
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         async def on_mount(self) -> None:
             self.kte = KaneTextEditor()
             self.kte.ed.move(0, 1)
-            self.kte.ed.word_wrap = 10
+            self.kte.ed.set_word_wrap(10)
             await self.view.dock(self.kte)
 
         async def on_key(self, event: textual.events.Key) -> None:

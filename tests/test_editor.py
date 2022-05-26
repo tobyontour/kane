@@ -180,5 +180,23 @@ def test_editor_append_text_beyond_word_wrap():
     e.set_word_wrap(10)
     e.append(" ")
 
-    assert e.get() == """0123456789\n """
-    assert e.position() == (1, 1)
+    assert e.get() == """0123456789\n"""
+    assert e.position() == (0, 1)
+
+
+def test_editor_append_text_beyond_word_wrap_word_break():
+    e = editor.Editor("""The quick brown fox jumped over.""")
+    e.set_word_wrap(10)
+    e.wrap()
+
+    assert e.get() == """The quick\nbrown fox\njumped\nover."""
+
+
+def test_editor_append_text_beyond_word_wrap_word_break_cursor_position():
+    e = editor.Editor("""The quick\nbrown fox\njumped\nover.""")
+    e.set_word_wrap(10)
+    e.wrap()
+    e.move(9, 1)
+    e.append(" lazily ")
+
+    assert e.get() == """The quick\nbrown fox\nlazily\njumped\nover."""
