@@ -114,35 +114,37 @@ class Editor:
         if self.wrap_type == WrapType.CHARACTER:
             pass
         elif self.wrap_type == WrapType.WORD:
-            start = 0
-            y = self.current_line
-            for i, line in enumerate(self.lines, start):
-                if len(line) > self.wrap_length:
-                    if i >= len(self.lines) - 1:
-                        self.lines.append("")
+            self.word_wrap()
 
-                    split_point = self.wrap_length
-                    # If there's a space in the line before the word wrap we can
-                    # split on.
-                    if line.rfind(' ', 0, self.wrap_length) != -1:
-                        split_point = line.rfind(' ', 0, self.wrap_length) + 1
-                    elif len(line) == (self.wrap_length + 1) and line[-1] == ' ':
-                        line = line[:-1]
+    def word_wrap(self):
+        start = 0
+        y = self.current_line
+        for i, line in enumerate(self.lines, start):
+            if len(line) > self.wrap_length:
+                if i >= len(self.lines) - 1:
+                    self.lines.append("")
 
-                    if len(self.lines[i + 1]) > 0:
-                        if self.lines[i + 1][0] == ' ':
-                            self.lines[i + 1] = line[split_point:] + self.lines[i + 1]
-                        else:
-                            self.lines[i + 1] = line[split_point:] + ' ' + self.lines[i + 1]
+                split_point = self.wrap_length
+                # If there's a space in the line before the word wrap we can
+                # split on.
+                if line.rfind(' ', 0, self.wrap_length) != -1:
+                    split_point = line.rfind(' ', 0, self.wrap_length) + 1
+                elif len(line) == (self.wrap_length + 1) and line[-1] == ' ':
+                    line = line[:-1]
+
+                if len(self.lines[i + 1]) > 0:
+                    if self.lines[i + 1][0] == ' ':
+                        self.lines[i + 1] = line[split_point:] + self.lines[i + 1]
                     else:
-                        self.lines[i + 1] = line[split_point:]
-                    if i == y:
-                        y += 1
+                        self.lines[i + 1] = line[split_point:] + ' ' + self.lines[i + 1]
+                else:
+                    self.lines[i + 1] = line[split_point:]
+                if i == y:
+                    y += 1
 
-                    self.lines[i] = line[0:split_point].rstrip()
+                self.lines[i] = line[0:split_point].rstrip()
 
-            self.move(self.position()[0], y)
-
+        self.move(self.position()[0], y)
 
 
     def update(self):
