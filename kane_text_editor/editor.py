@@ -22,6 +22,16 @@ class Editor:
         self.current_line_editor = LineEditor(self.lines[0])
         self.current_line_editor.cursor_move(0)
 
+    def __repr__(self) -> str:
+        tmp = str(self)
+        return f'Editor("{tmp}")'
+
+    def __str__(self) -> str:
+        return "\n".join(self.lines)
+
+    def __len__(self) -> int:
+        return len(str(self))
+
     def set_word_wrap(self, wr: int) -> None:
         self.wrap_type = WrapType.WORD
         self.wrap_length = wr
@@ -29,9 +39,6 @@ class Editor:
     def set_character_wrap(self, wr: int) -> None:
         self.wrap_type = WrapType.CHARACTER
         self.wrap_length = wr
-
-    def get(self):
-        return "\n".join(self.lines)
 
     def position(self):
         if self.current_line_editor is not None:
@@ -146,11 +153,10 @@ class Editor:
 
         self.move(self.position()[0], y)
 
-
     def update(self):
-        line_editor_content = self.current_line_editor.get().splitlines()
+        line_editor_content = str(self.current_line_editor).splitlines()
         if len(line_editor_content) == 1:
-            self.lines[self.current_line] = self.current_line_editor.get()
+            self.lines[self.current_line] = str(self.current_line_editor)
         elif self.current_line == 0:
             self.lines = line_editor_content + self.lines[1:]
         else:
@@ -168,9 +174,15 @@ class LineEditor:
         self.buffer = list(s)
         self.cursor = len(s)
 
-    def get(self):
-        string = ""
-        return string.join(self.buffer)
+    def __repr__(self) -> str:
+        tmp = str(self)
+        return f'LineEditor("{tmp}")'
+
+    def __str__(self) -> str:
+        return ''.join(self.buffer)
+
+    def __len__(self) -> int:
+        return len(self.buffer)
 
     def cursor_position(self):
         return self.cursor
@@ -180,19 +192,19 @@ class LineEditor:
             self.cursor -= 1
 
     def cursor_forward(self):
-        if self.cursor < len(self.buffer):
+        if self.cursor < len(self):
             self.cursor += 1
 
     def cursor_move(self, position: int):
-        if position < len(self.buffer) and position >= 0:
+        if position < len(self) and position >= 0:
             self.cursor = position
-        elif position >= len(self.buffer):
-            self.cursor = len(self.buffer)
+        elif position >= len(self):
+            self.cursor = len(self)
         else:
             self.cursor = 0
 
     def copy(self):
-        if self.cursor < len(self.buffer):
+        if self.cursor < len(self):
             self.clipboard_buffer = self.buffer[self.cursor]
 
     def clipboard(self):
@@ -204,7 +216,7 @@ class LineEditor:
             self.cursor += 1
 
     def delete(self):
-        if len(self.buffer) > self.cursor:
+        if len(self) > self.cursor:
             self.clipboard_buffer = self.buffer[self.cursor]
             del self.buffer[self.cursor]
 

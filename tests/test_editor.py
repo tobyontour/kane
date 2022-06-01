@@ -7,19 +7,19 @@ from kane_text_editor import editor
 
 def test_editor_starts_off_empty():
     e = editor.Editor()
-    assert e.get() == ""
+    assert str(e) == ""
 
 
 def test_editor_starts_off_with_inital_string():
     e = editor.Editor("The quick brown fox")
-    assert e.get() == "The quick brown fox"
+    assert str(e) == "The quick brown fox"
 
 
 def test_editor_with_simple_insertion():
     e = editor.Editor("The quick brown fox")
     e.move(5, 0)
     e.append("XXX")
-    assert e.get() == "The qXXXuick brown fox"
+    assert str(e) == "The qXXXuick brown fox"
     assert e.position() == (8, 0)
 
 
@@ -33,14 +33,14 @@ def test_editor_with_simple_editting():
     e.cursor_backward()
     e.backspace()
     assert e.position() == (1, 0)
-    assert e.get() == "Te quick brown fox"
+    assert str(e) == "Te quick brown fox"
 
 
 def test_editor_starts_off_with_inital_multiline_string():
     e = editor.Editor("""The quick brown fox
 jumped over the lazy
 dog's back.""")
-    assert e.get() == """The quick brown fox
+    assert str(e) == """The quick brown fox
 jumped over the lazy
 dog's back."""
 
@@ -87,7 +87,7 @@ dog's back.""")
     e.append(" with\nease")
 
     assert e.position() == (4, 2)
-    assert e.get() == """The quick brown fox
+    assert str(e) == """The quick brown fox
 jumped with
 ease over the lazy
 dog's back."""
@@ -98,7 +98,7 @@ def test_editor_deals_with_added_line_return_from_line_editor():
     e.append("\n")
 
     assert e.position() == (0, 1)
-    assert e.get() == """
+    assert str(e) == """
 The quick brown fox"""
 
 
@@ -108,7 +108,7 @@ def test_editor_cursor_backwards_at_start_of_second_line():
     e.cursor_backward()
 
     assert e.position() == (19, 0)
-    assert e.get() == """The quick brown fox\njumped over"""
+    assert str(e) == """The quick brown fox\njumped over"""
 
 
 def test_editor_cursor_forwards_at_end_of_first_line():
@@ -117,7 +117,7 @@ def test_editor_cursor_forwards_at_end_of_first_line():
     e.cursor_forward()
 
     assert e.position() == (0, 1)
-    assert e.get() == """The quick brown fox\njumped over"""
+    assert str(e) == """The quick brown fox\njumped over"""
 
 
 def test_editor_cursor_forwards_at_end_of_last_line():
@@ -126,7 +126,7 @@ def test_editor_cursor_forwards_at_end_of_last_line():
     e.cursor_forward()
 
     assert e.position() == (11, 1)
-    assert e.get() == """The quick brown fox\njumped over"""
+    assert str(e) == """The quick brown fox\njumped over"""
 
 
 def test_editor_cursor_up():
@@ -135,7 +135,7 @@ def test_editor_cursor_up():
     e.cursor_up()
 
     assert e.position() == (5, 0)
-    assert e.get() == """The quick brown fox\njumped over"""
+    assert str(e) == """The quick brown fox\njumped over"""
 
 
 def test_editor_cursor_up_to_a_shorter_line():
@@ -144,7 +144,7 @@ def test_editor_cursor_up_to_a_shorter_line():
     e.cursor_up()
 
     assert e.position() == (19, 0)
-    assert e.get() == """The quick brown fox\njumped over the lazy dog's back"""
+    assert str(e) == """The quick brown fox\njumped over the lazy dog's back"""
 
 
 def test_editor_cursor_down():
@@ -153,7 +153,7 @@ def test_editor_cursor_down():
     e.cursor_down()
 
     assert e.position() == (6, 1)
-    assert e.get() == """The quick brown fox\njumped over"""
+    assert str(e) == """The quick brown fox\njumped over"""
 
 
 def test_editor_cursor_down_off_end():
@@ -162,7 +162,7 @@ def test_editor_cursor_down_off_end():
     e.cursor_down()
 
     assert e.position() == (11, 1)
-    assert e.get() == """The quick brown fox\njumped over"""
+    assert str(e) == """The quick brown fox\njumped over"""
 
 
 def test_editor_backspace_at_start_of_second_line():
@@ -171,7 +171,7 @@ def test_editor_backspace_at_start_of_second_line():
     e.backspace()
 
     assert e.position() == (19, 0)
-    assert e.get() == """The quick brown foxjumped over\nx"""
+    assert str(e) == """The quick brown foxjumped over\nx"""
 
 
 def test_editor_append_text_beyond_word_wrap():
@@ -180,7 +180,7 @@ def test_editor_append_text_beyond_word_wrap():
     e.set_word_wrap(10)
     e.append(" ")
 
-    assert e.get() == """0123456789\n"""
+    assert str(e) == """0123456789\n"""
     assert e.position() == (0, 1)
 
 
@@ -189,7 +189,7 @@ def test_editor_append_text_beyond_word_wrap_word_break():
     e.set_word_wrap(10)
     e.wrap()
 
-    assert e.get() == """The quick\nbrown fox\njumped\nover."""
+    assert str(e) == """The quick\nbrown fox\njumped\nover."""
 
 
 def test_editor_append_text_beyond_word_wrap_word_break_cursor_position():
@@ -199,4 +199,4 @@ def test_editor_append_text_beyond_word_wrap_word_break_cursor_position():
     e.move(9, 1)
     e.append(" lazily ")
 
-    assert e.get() == """The quick\nbrown fox\nlazily\njumped\nover."""
+    assert str(e) == """The quick\nbrown fox\nlazily\njumped\nover."""
