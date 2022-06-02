@@ -174,6 +174,34 @@ def test_editor_backspace_at_start_of_second_line():
     assert str(e) == """The quick brown foxjumped over\nx"""
 
 
+def test_editor_append_text_beyond_character_wrap():
+    e = editor.Editor("""0123456789""")
+    e.move(10, 0)
+    e.set_character_wrap(10)
+    e.append(" ")
+
+    assert str(e) == """0123456789\n"""
+    assert e.position() == (0, 1)
+
+
+def test_editor_append_text_beyond_character_wrap_word_break():
+    e = editor.Editor("""The quick brown fox jumped over.""")
+    e.set_character_wrap(10)
+    e.wrap()
+
+    assert str(e) == """The quick \nbrown fox \njumped ove\nr."""
+
+
+def test_editor_append_text_beyond_character_wrap_word_break_cursor_position():
+    e = editor.Editor("""The quick\nbrown fox\njumped\nover.""")
+    e.set_character_wrap(10)
+    e.wrap()
+    e.move(9, 1)
+    e.append(" lazily ")
+
+    assert str(e) == """The quick\nbrown fox \nlazily jum\npedover."""
+
+
 def test_editor_append_text_beyond_word_wrap():
     e = editor.Editor("""0123456789""")
     e.move(10, 0)

@@ -119,9 +119,30 @@ class Editor:
             return
 
         if self.wrap_type == WrapType.CHARACTER:
-            pass
+            self.character_wrap()
         elif self.wrap_type == WrapType.WORD:
             self.word_wrap()
+
+    def character_wrap(self):
+        start = 0
+        overflow = ''
+        x, y = self.position()
+        for i, line in enumerate(self.lines, start):
+            if len(line) > self.wrap_length:
+                overflow = line[self.wrap_length:]
+                self.lines[i] = line[:self.wrap_length]
+                if i >= len(self.lines) - 1:
+                    self.lines.append('')
+                if overflow[0] == ' ':
+                    overflow = overflow[1:]
+                self.lines[i + 1] = overflow + self.lines[i + 1]
+                if x > self.wrap_length and y == i:
+                    y += 1
+                    x -= self.wrap_length
+                    self.move(x, y)
+                elif y == (i + 1):
+                    x += len(overflow)
+                    self.move(x, y)
 
     def word_wrap(self):
         start = 0
