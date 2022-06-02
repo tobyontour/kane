@@ -2,28 +2,23 @@
 
 from xmlrpc.client import boolean
 from rich.panel import Panel
-from textual.reactive import Reactive
 from textual.widget import Widget
 import textual
 from rich_editor import RichEditor
 
 
 class KaneTextEditor(Widget):
-    buffer_change = Reactive(False)
     ed = RichEditor("The quick brown fox jumped over. ")
 
     def __init__(self, name: str = None) -> None:
         super().__init__(name)
 
     def render(self) -> Panel:
-        return Panel(self.ed.get())
+        return Panel(str(self.ed))
 
     def on_key(self, event: textual.events.Key) -> None:
         if self.process_key(event.key):
-            if self.buffer_change:
-                self.buffer_change = False
-            else:
-                self.buffer_change = True
+            self.refresh()
 
     def process_key(self, key: str) -> boolean:
         update_required = True
