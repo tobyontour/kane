@@ -1,12 +1,8 @@
 
+
 class WordWrap:
     def __init__(self, wrap_length: int = 80) -> None:
         self.wrap_length = wrap_length
-
-    def wrap(self, lines: list) -> list:
-        for i, line in enumerate(lines):
-
-
 
     def wrap_line(self, line: str) -> list:
         output = []
